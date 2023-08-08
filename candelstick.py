@@ -36,17 +36,33 @@ app.layout = html.Div(
 )
   
 def update_graph_scatter(n_intervals):
+    url = "https://www.bitstamp.net/api/v2/ohlc/btcusd/"
+    params = { "step" : "60",
+                "limit" : "30",}
+    data = request.get(url,params = params).json()["data"]["ohlc"]
+    data.timestamp = pd.to_datetime(data.timestamp,unit="s")
     candles = go.Figure(
       data = plotly.Candlestick(
-                  x = df.index,
-                  low = df['Low'],
-                  high = df['High'],
-                  close = df['Adj Close'],
-                  open = df['Open'],
-                  increasing_line_color = 'green',
-                  decreasing_line_color = 'red'
+                  x = data.timestamp,
+                  low = data.low,
+                  high = data.high,
+                  close = data.close,
+                  open = data.open,
+                  # increasing_line_color = 'green',
+                  # decreasing_line_color = 'red'
           )
     )
+    # candles = go.Figure(
+    #   data = plotly.Candlestick(
+    #               x = df.index,
+    #               low = df['Low'],
+    #               high = df['High'],
+    #               close = df['Adj Close'],
+    #               open = df['Open'],
+    #               increasing_line_color = 'green',
+    #               decreasing_line_color = 'red'
+    #       )
+    # )
     return candles
   
 if __name__ == '__main__':
