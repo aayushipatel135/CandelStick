@@ -41,18 +41,19 @@ app.layout = html.Div(
 def update_graph_scatter(n):
     global last
     df1 = df.iloc[last,:]  
-    data = plotly.Candlestick(
-                x = df1.index,
-                low = df1['Low'],
-                high = df1['High'],
-                close = df1['Adj Close'],
-                open = df1['Open'],
-                increasing_line_color = 'green',
-                decreasing_line_color = 'red'
-        )
-    last = last + 1
-    return {'data': [data],
-            'layout' : go.Layout( title="Stock Price",
+    fig = go.Figure(
+      data = plotly.Candlestick(
+                  x = df1.index,
+                  low = df1['Low'],
+                  high = df1['High'],
+                  close = df1['Adj Close'],
+                  open = df1['Open'],
+                  increasing_line_color = 'green',
+                  decreasing_line_color = 'red'
+          )
+    )
+    fig.update_layout(
+                    title="Stock Price",
                     xaxis_title="Date",
                     yaxis_title="Price",
                     autosize=False,
@@ -61,7 +62,10 @@ def update_graph_scatter(n):
                     margin=dict(l=30,r=30,b=30,
                                 t=30,pad=3
                                 ),
-                    paper_bgcolor="white")}
+                    paper_bgcolor="white",
+                )
+    last = last + 1
+    return fig
   
 if __name__ == '__main__':
     app.run_server(debug=False)
