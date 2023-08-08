@@ -36,7 +36,7 @@ app.layout = html.Div(
 )
   
 def update_graph_scatter(n_intervals):
-    candels = go.Figure(
+    candles = go.Figure(
       data = plotly.Candlestick(
                   x = df.index,
                   low = df['Low'],
@@ -47,7 +47,7 @@ def update_graph_scatter(n_intervals):
                   decreasing_line_color = 'red'
           )
     )
-    candels.update_layout(
+    candles.update_layout(
                     title="Stock Price",
                     xaxis_title="Date",
                     yaxis_title="Price",
@@ -59,8 +59,7 @@ def update_graph_scatter(n_intervals):
                                 ),
                     paper_bgcolor="white",
                 )
-    last = last + 1
-    return candels
+    return candles
   
 if __name__ == '__main__':
     app.run_server(debug=False)
