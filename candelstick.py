@@ -11,8 +11,6 @@ import pandas as pd
 df = pd.read_csv("data.csv")
 df = df.set_index(pd.DatetimeIndex(df['Date']))
 
-last = 0  
-  
 app = dash.Dash(__name__)
 server = app.server
   
@@ -38,8 +36,6 @@ app.layout = html.Div(
 )
   
 def update_graph_scatter(n_intervals):
-    global last
-    df1 = df.iloc[last,:]  
     candels = go.Figure(
       data = plotly.Candlestick(
                   x = df.index,
