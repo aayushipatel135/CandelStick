@@ -47,18 +47,6 @@ def update_graph_scatter(n_intervals):
                   decreasing_line_color = 'red'
           )
     )
-    candles.update_layout(
-                    title="Stock Price",
-                    xaxis_title="Date",
-                    yaxis_title="Price",
-                    autosize=False,
-                    width=1800,
-                    height=800,
-                    margin=dict(l=30,r=30,b=30,
-                                t=30,pad=3
-                                ),
-                    paper_bgcolor="white",
-                )
     return candles
   
 if __name__ == '__main__':
