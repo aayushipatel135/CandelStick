@@ -18,7 +18,7 @@ server = app.server
   
 app.layout = html.Div(
     [
-        dcc.H1(id = "count-up"),
+        html.H1(id = "count-up"),
         dcc.Graph(id = 'candels'),
         dcc.Interval(
             id = 'graph-update',
