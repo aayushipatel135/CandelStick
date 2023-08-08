@@ -19,7 +19,7 @@ server = app.server
 app.layout = html.Div(
     [
         html.H1(id = "count-up"),
-        dcc.Graph(id = 'candels'),
+        dcc.Graph(id = 'candles'),
         dcc.Interval(
             id = 'graph-update',
             interval = 2000,
@@ -33,8 +33,8 @@ app.layout = html.Div(
 #     [ Input('graph-update', 'n_intervals') ]
 # )
 @app.callback(
+  Output("candles","figure"),
   Input("interval","n_intervals"),
-  Output("candels","children"),
 )
   
 def update_graph_scatter(n_intervals):
