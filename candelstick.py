@@ -18,35 +18,40 @@ server = app.server
   
 app.layout = html.Div(
     [
-        dcc.Graph(id = 'live-graph', animate = True),
+        dcc.H1(id = "count-up"),
+        dcc.Graph(id = 'candels'),
         dcc.Interval(
             id = 'graph-update',
-            interval = 1000,
-            n_intervals = 0
+            interval = 2000,
+           # n_intervals = 0
         ),
     ]
 )
   
+# @app.callback(
+#     Output('live-graph', 'figure'),
+#     [ Input('graph-update', 'n_intervals') ]
+# )
 @app.callback(
-    Output('live-graph', 'figure'),
-    [ Input('graph-update', 'n_intervals') ]
+  Input("interval","n_intervals"),
+  Output("candels","children"),
 )
   
-def update_graph_scatter(n):
+def update_graph_scatter(n_intervals):
     global last
     df1 = df.iloc[last,:]  
-    fig = go.Figure(
+    candels = go.Figure(
       data = plotly.Candlestick(
-                  x = df1.index,
-                  low = df1['Low'],
-                  high = df1['High'],
-                  close = df1['Adj Close'],
-                  open = df1['Open'],
+                  x = df.index,
+                  low = df['Low'],
+                  high = df['High'],
+                  close = df['Adj Close'],
+                  open = df['Open'],
                   increasing_line_color = 'green',
                   decreasing_line_color = 'red'
           )
     )
-    fig.update_layout(
+    candels.update_layout(
                     title="Stock Price",
                     xaxis_title="Date",
                     yaxis_title="Price",
@@ -59,7 +64,7 @@ def update_graph_scatter(n):
                     paper_bgcolor="white",
                 )
     last = last + 1
-    return fig
+    return candels
   
 if __name__ == '__main__':
     app.run_server(debug=False)
