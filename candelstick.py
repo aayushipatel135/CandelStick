@@ -14,6 +14,7 @@ Y = deque(maxlen = 20)
 Y.append(1)
   
 app = dash.Dash(__name__)
+server = app.server
   
 app.layout = html.Div(
     [
@@ -46,4 +47,4 @@ def update_graph_scatter(n):
             'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
   
 if __name__ == '__main__':
-    app.run_server(port=8049, debug=False)
+    app.run_server(pdebug=False)
