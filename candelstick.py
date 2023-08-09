@@ -62,7 +62,7 @@ def update_graph_scatter(n):
         low.append(df.iloc[last,3])
         close.append(df.iloc[last,4]
                      
-        data = go.Candlestick(
+        data = [go.Candlestick(
                 x = list(x),
                 low = list(low),
                 high = list(high),
@@ -70,7 +70,7 @@ def update_graph_scatter(n):
                 open = list(open),
                 increasing_line_color = 'green',
                 decreasing_line_color = 'red'
-        )
+        )]
         last = last + 1
     # data = plotly.graph_objs.Scatter(
     #         x=list(X),
