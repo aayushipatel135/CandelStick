@@ -14,6 +14,7 @@ Y = deque(maxlen = 20)
 Y.append(1)
 
 app = dash.Dash(__name__)
+server = app.server
 
 app.layout = html.Div(
     [
@@ -25,7 +26,6 @@ app.layout = html.Div(
         ),
     ]
 )
-
 @app.callback(
     Output('live-graph', 'figure'),
     [ Input('graph-update', 'n_intervals') ]
@@ -41,7 +41,7 @@ def update_graph_scatter(n):
             name='Scatter',
             mode= 'lines+markers'
     )
-
+    print(data)
     return {'data': [data],
             'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
 
