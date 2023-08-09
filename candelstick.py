@@ -73,7 +73,7 @@ def update_graph_scatter(n):
         open.append(df.iloc[last,1])
         high.append(df.iloc[last,2])
         low.append(df.iloc[last,3])
-        close.append(df.iloc[last,4]
+        close.append(df.iloc[last,4])
 
         ema.append(df.iloc[last,9])
         sma.append(df.iloc[last,7])
