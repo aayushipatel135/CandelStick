@@ -89,15 +89,15 @@ def update_graph_scatter(n):
                  mode= 'lines+markers'
                 )
 
-        # data = [plotly.graph_objs.Candlestick(
-        #         x = list(x),
-        #         low = list(low),
-        #         high = list(high),
-        #         close = list(close),
-        #         open = list(open),
-        #         increasing_line_color = 'green',
-        #         decreasing_line_color = 'red'
-        # ), ]
+        candle = plotly.graph_objs.Candlestick(
+                x = list(x),
+                low = list(low),
+                high = list(high),
+                close = list(close),
+                open = list(open),
+                increasing_line_color = 'green',
+                decreasing_line_color = 'red'
+        )
         last = last + 1
     # data = plotly.graph_objs.Scatter(
     #         x=list(X),
@@ -106,7 +106,7 @@ def update_graph_scatter(n):
     #         mode= 'lines+markers'
     # )
         print(data)
-        return {'data': [ema,sma],
+        return {'data': [candle,ema,sma],
                 'layout' : go.Layout(xaxis=dict(range=[min(x),max(x)]),yaxis = dict(range = [min(min(ema),min(sma)),max(max(ema),max(sma)]),)}
     else : 
         X.append(X[-1]+1)
@@ -118,7 +118,7 @@ def update_graph_scatter(n):
             mode= 'lines+markers'
         )
         return {'data': [data],
-                'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
+                'layout' : go.Layout(xaxis_rangeslider_visible=False)}
         
 
 
