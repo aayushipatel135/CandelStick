@@ -32,6 +32,9 @@ low.append(df.iloc[0,3])
 close = deque(maxlen = 20)
 close.append(df.iloc[0,4])
 
+mid = deque(maxlen = 20)
+mid.append(int((df.iloc[0,4] + df.iloc[0,1])/2))
+
 # ema = deque(maxlen = 20)
 # ema.append(df.iloc[0,9])
 
@@ -74,6 +77,7 @@ def update_graph_scatter(n):
         high.append(df.iloc[last,2])
         low.append(df.iloc[last,3])
         close.append(df.iloc[last,4])
+        mid.append(int((df.iloc[last,4] + df.iloc[last,1])/2))
 
         # ema.append(df.iloc[last,9])
         # sma.append(df.iloc[last,7])
@@ -98,9 +102,15 @@ def update_graph_scatter(n):
                 increasing_line_color = 'green',
                 decreasing_line_color = 'red'
         )
+        scatter = plotly.graph_objs.Scatter(
+            x=list(x),
+            y=list(mid),
+            name='Scatter',
+            mode= 'lines+markers'
+        )
         last = last + 1
-        return {'data': [candle,],
-                'layout' : go.Layout(xaxis_rangeslider_visible=True,)}
+        return {'data': [candle,scatter],
+                'layout' : go.Layout(xaxis_rangeslider_visible=True,xaxis=dict(range=[min(X),max(X)]),)}
     else : 
         X.append(X[-1]+1)
         Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
