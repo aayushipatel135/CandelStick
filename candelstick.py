@@ -7,11 +7,33 @@ import random
 import plotly.graph_objs as go
 from collections import deque
 
+
+df = pd.read_csv('data.csv')
+df = df.set_index(pd.DatetimeIndex(df['Date']))
+
+x = deque(maxlen = 20)
+x.append(df.iloc[0,0])
+
+open = deque(maxlen = 20)
+open.append(df.iloc[0,1])
+
+high = deque(maxlen = 20)
+high.append(df.iloc[0,2])
+
+low = deque(maxlen = 20)
+low.append(df.iloc[0,3])
+
+close = deque(maxlen = 20)
+close.append(df.iloc[0,4])
+
+
 X = deque(maxlen = 20)
 X.append(1)
 
 Y = deque(maxlen = 20)
 Y.append(1)
+
+last = 1
 
 app = dash.Dash(__name__)
 server = app.server
@@ -32,18 +54,47 @@ app.layout = html.Div(
 )
 
 def update_graph_scatter(n):
-    X.append(X[-1]+1)
-    Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
-
-    data = plotly.graph_objs.Scatter(
+    if last < len(df) : 
+        
+        x.append(df.iloc[last,0])
+        open.append(df.iloc[last,1])
+        high.append(df.iloc[last,2])
+        low.append(df.iloc[last,3])
+        close.append(df.iloc[last,4]
+                     
+        data = plotly.graph_objs.Candlestick(
+                x = list(x),
+                low = list(low),
+                high = list(high),
+                close = list(close),
+                open = list(open),
+                increasing_line_color = 'green',
+                decreasing_line_color = 'red'
+        )
+        last = last + 1
+    # data = plotly.graph_objs.Scatter(
+    #         x=list(X),
+    #         y=list(Y),
+    #         name='Scatter',
+    #         mode= 'lines+markers'
+    # )
+        print(data)
+        return {'data': [data],
+                'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(open),max(close)]),)}
+    else : 
+        X.append(X[-1]+1)
+        Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
+        data = plotly.graph_objs.Scatter(
             x=list(X),
             y=list(Y),
             name='Scatter',
             mode= 'lines+markers'
-    )
-    print(data)
-    return {'data': [data],
-            'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
+        )
+        return {'data': [data],
+                'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(open),max(close)]),)}
+        
+
+
 
 if __name__ == '__main__':
     app.run_server(debug=False)
