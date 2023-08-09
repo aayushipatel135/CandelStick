@@ -6,10 +6,16 @@ import plotly
 import random
 import plotly.graph_objs as go
 from collections import deque
+import talib
 
 
 df = pd.read_csv('data.csv')
 df = df.set_index(pd.DatetimeIndex(df['Date']))
+df["SMA"] = talib.SMA(df.Close, timeperiod=3)
+df["RSI"] = talib.RSI(df.Close, timeperiod=3)
+df["EMA"] = talib.EMA(df.Close, timeperiod=3)
+
+apple_df.head()
 
 x = deque(maxlen = 20)
 x.append(df.iloc[0,0])
@@ -25,6 +31,12 @@ low.append(df.iloc[0,3])
 
 close = deque(maxlen = 20)
 close.append(df.iloc[0,4])
+
+ema = deque(maxlen = 20)
+ema.append(df.iloc[0,9])
+
+sma = deque(maxlen = 20)
+sma.append(df.iloc[0,7])
 
 
 X = deque(maxlen = 20)
@@ -54,6 +66,7 @@ app.layout = html.Div(
 )
 
 def update_graph_scatter(n):
+    global last
     if last < len(df) : 
         
         x.append(df.iloc[last,0])
@@ -61,16 +74,30 @@ def update_graph_scatter(n):
         high.append(df.iloc[last,2])
         low.append(df.iloc[last,3])
         close.append(df.iloc[last,4]
-                     
-        data = [plotly.graph_objs.Candlestick(
-                x = list(x),
-                low = list(low),
-                high = list(high),
-                close = list(close),
-                open = list(open),
-                increasing_line_color = 'green',
-                decreasing_line_color = 'red'
-        ), ]
+
+        ema.append(df.iloc[last,9])
+        sma.append(df.iloc[last,7])
+
+        sma = go.Scatter(x=list(x),
+                 y=list(sma),
+                 name="SMA",
+                 mode= 'lines+markers'
+                )
+        ema = go.Scatter(x=list(x),
+                 y=list(ema),
+                 name="EMA",
+                 mode= 'lines+markers'
+                )
+
+        # data = [plotly.graph_objs.Candlestick(
+        #         x = list(x),
+        #         low = list(low),
+        #         high = list(high),
+        #         close = list(close),
+        #         open = list(open),
+        #         increasing_line_color = 'green',
+        #         decreasing_line_color = 'red'
+        # ), ]
         last = last + 1
     # data = plotly.graph_objs.Scatter(
     #         x=list(X),
@@ -80,7 +107,7 @@ def update_graph_scatter(n):
     # )
         print(data)
         return {'data': data,
-                'layout' : go.Layout(xaxis_rangeslider_visible=False)}
+                'layout' : go.Layout(xaxis=dict(range=[min(x),max(x)]),yaxis = dict(range = [min(Y),max(Y)]),)}
     else : 
         X.append(X[-1]+1)
         Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
