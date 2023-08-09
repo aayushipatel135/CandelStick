@@ -25,10 +25,10 @@ def display_candlestick(value):
     df = pd.read_csv('data.csv') # replace with your own data source
     fig = go.Figure(go.Candlestick(
         x=df['Date'],
-        open=df['AAPL.Open'],
-        high=df['AAPL.High'],
-        low=df['AAPL.Low'],
-        close=df['AAPL.Close']
+        open=df['Open'],
+        high=df['High'],
+        low=df['Low'],
+        close=df['Adj Close']
     ))
 
     fig.update_layout(
