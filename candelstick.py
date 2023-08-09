@@ -2,6 +2,7 @@ from dash import Dash, dcc, html, Input, Output
 import plotly.graph_objects as go
 import pandas as pd
 
+df = pd.read_csv('data.csv')
 
 app = Dash(__name__)
 server = app.server
@@ -22,7 +23,7 @@ app.layout = html.Div([
     Output("graph", "figure"), 
     Input("toggle-rangeslider", "value"))
 def display_candlestick(value):
-    df = pd.read_csv('data.csv') # replace with your own data source
+     # replace with your own data source
     fig = go.Figure(go.Candlestick(
         x=df['Date'],
         open=df['Open'],
