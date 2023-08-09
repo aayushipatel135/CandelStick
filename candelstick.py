@@ -1,113 +1,95 @@
-from dash import Dash, dcc, html, Input, Output
-import plotly.graph_objects as go
-import pandas as pd
+import dash
+from dash.dependencies import Output, Input
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly
+import random
+import plotly.graph_objs as go
+from collections import deque
 
-df = pd.read_csv('data.csv')
+X = deque(maxlen = 20)
+X.append(1)
 
-app = Dash(__name__)
-server = app.server
+Y = deque(maxlen = 20)
+Y.append(1)
 
-app.layout = html.Div([
-    html.H4('Apple stock candlestick chart'),
-    dcc.Checklist(
-        id='toggle-rangeslider',
-        options=[{'label': 'Include Rangeslider', 
-                  'value': 'slider'}],
-        value=['slider']
-    ),
-    dcc.Graph(id="graph"),
-])
+app = dash.Dash(__name__)
 
+app.layout = html.Div(
+    [
+        dcc.Graph(id = 'live-graph', animate = True),
+        dcc.Interval(
+            id = 'graph-update',
+            interval = 1000,
+            n_intervals = 0
+        ),
+    ]
+)
 
 @app.callback(
-    Output("graph", "figure"), 
-    Input("toggle-rangeslider", "value"))
-def display_candlestick(value):
-     # replace with your own data source
-    fig = go.Figure(go.Candlestick(
-        x=df['Date'],
-        open=df['Open'],
-        high=df['High'],
-        low=df['Low'],
-        close=df['Adj Close']
-    ))
+    Output('live-graph', 'figure'),
+    [ Input('graph-update', 'n_intervals') ]
+)
 
-    fig.update_layout(
-        xaxis_rangeslider_visible='slider' in value
+def update_graph_scatter(n):
+    X.append(X[-1]+1)
+    Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
+
+    data = plotly.graph_objs.Scatter(
+            x=list(X),
+            y=list(Y),
+            name='Scatter',
+            mode= 'lines+markers'
     )
 
-    return fig
+    return {'data': [data],
+            'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
 
 if __name__ == '__main__':
     app.run_server(debug=False)
 
-# app.run_server(debug=True)
-# import dash
-# from dash.dependencies import Output, Input
-# import dash_core_components as dcc
-# import dash_html_components as html
-# import plotly
-# import random
-# import plotly.graph_objs as go
-# from collections import deque
+# from dash import Dash, dcc, html, Input, Output
+# import plotly.graph_objects as go
 # import pandas as pd
 
-# df = pd.read_csv("data.csv")
-# df = df.set_index(pd.DatetimeIndex(df['Date']))
+# df = pd.read_csv('data.csv')
 
-# app = dash.Dash(__name__)
+# app = Dash(__name__)
 # server = app.server
-  
-# app.layout = html.Div(
-#     [
-#         html.H1(id = "count-up"),
-#         dcc.Graph(id = 'candles'),
-#         dcc.Interval(
-#             id = 'graph-update',
-#             interval = 2000,
-#            # n_intervals = 0
-#         ),
-#     ]
-# )
-  
-# # @app.callback(
-# #     Output('live-graph', 'figure'),
-# #     [ Input('graph-update', 'n_intervals') ]
-# # )
+
+# app.layout = html.Div([
+#     html.H4('Apple stock candlestick chart'),
+#     dcc.Checklist(
+#         id='toggle-rangeslider',
+#         options=[{'label': 'Include Rangeslider', 
+#                   'value': 'slider'}],
+#         value=['slider']
+#     ),
+#     dcc.Graph(id="graph"),
+# ])
+
+
 # @app.callback(
-#   Output("candles","figure"),
-#   Input("interval","n_intervals"),
-# )
-  
-# def update_graph_scatter(n_intervals):
-#     url = "https://www.bitstamp.net/api/v2/ohlc/btcusd/"
-#     params = { "step" : "60",
-#                 "limit" : "30",}
-#     data = request.get(url,params = params).json()["data"]["ohlc"]
-#     data.timestamp = pd.to_datetime(data.timestamp,unit="s")
-#     candles = go.Figure(
-#       data = plotly.Candlestick(
-#                   x = data.timestamp,
-#                   low = data.low,
-#                   high = data.high,
-#                   close = data.close,
-#                   open = data.open,
-#                   # increasing_line_color = 'green',
-#                   # decreasing_line_color = 'red'
-#           )
+#     Output("graph", "figure"), 
+#     Input("toggle-rangeslider", "value"))
+# def display_candlestick(value):
+#      # replace with your own data source
+#     fig = go.Figure(go.Candlestick(
+#         x=df['Date'],
+#         open=df['Open'],
+#         high=df['High'],
+#         low=df['Low'],
+#         close=df['Adj Close']
+#     ))
+
+#     fig.update_layout(
+#         xaxis_rangeslider_visible='slider' in value
 #     )
-#     # candles = go.Figure(
-#     #   data = plotly.Candlestick(
-#     #               x = df.index,
-#     #               low = df['Low'],
-#     #               high = df['High'],
-#     #               close = df['Adj Close'],
-#     #               open = df['Open'],
-#     #               increasing_line_color = 'green',
-#     #               decreasing_line_color = 'red'
-#     #       )
-#     # )
-#     return candles
+
+#     return fig
+
+# if __name__ == '__main__':
+#     app.run_server(debug=False)
   
 # if __name__ == '__main__':
 #     app.run_server(debug=False)
