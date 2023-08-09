@@ -16,7 +16,6 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
-apple_df.head()
 
 x = deque(maxlen = 20)
 x.append(df.iloc[0,0])
