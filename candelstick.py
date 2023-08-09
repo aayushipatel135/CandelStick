@@ -99,13 +99,6 @@ def update_graph_scatter(n):
                 decreasing_line_color = 'red'
         )
         last = last + 1
-    # data = plotly.graph_objs.Scatter(
-    #         x=list(X),
-    #         y=list(Y),
-    #         name='Scatter',
-    #         mode= 'lines+markers'
-    # )
-        print(data)
         return {'data': [candle,],
                 'layout' : go.Layout(xaxis_rangeslider_visible=False,)}
     else : 
