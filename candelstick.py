@@ -106,8 +106,8 @@ def update_graph_scatter(n):
     #         mode= 'lines+markers'
     # )
         print(data)
-        return {'data': data,
-                'layout' : go.Layout(xaxis=dict(range=[min(x),max(x)]),yaxis = dict(range = [min(Y),max(Y)]),)}
+        return {'data': [ema,sma],
+                'layout' : go.Layout(xaxis=dict(range=[min(x),max(x)]),yaxis = dict(range = [min(min(ema),min(sma)),max(max(ema),max(sma)]),)}
     else : 
         X.append(X[-1]+1)
         Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
