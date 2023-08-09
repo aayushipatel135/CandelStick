@@ -6,14 +6,14 @@ import plotly
 import random
 import plotly.graph_objs as go
 from collections import deque
-import talib
+# import talib
 
 
 df = pd.read_csv('data.csv')
 df = df.set_index(pd.DatetimeIndex(df['Date']))
-df["SMA"] = talib.SMA(df.Close, timeperiod=3)
-df["RSI"] = talib.RSI(df.Close, timeperiod=3)
-df["EMA"] = talib.EMA(df.Close, timeperiod=3)
+# df["SMA"] = talib.SMA(df.Close, timeperiod=3)
+# df["RSI"] = talib.RSI(df.Close, timeperiod=3)
+# df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
 apple_df.head()
 
@@ -32,11 +32,11 @@ low.append(df.iloc[0,3])
 close = deque(maxlen = 20)
 close.append(df.iloc[0,4])
 
-ema = deque(maxlen = 20)
-ema.append(df.iloc[0,9])
+# ema = deque(maxlen = 20)
+# ema.append(df.iloc[0,9])
 
-sma = deque(maxlen = 20)
-sma.append(df.iloc[0,7])
+# sma = deque(maxlen = 20)
+# sma.append(df.iloc[0,7])
 
 
 X = deque(maxlen = 20)
@@ -75,19 +75,19 @@ def update_graph_scatter(n):
         low.append(df.iloc[last,3])
         close.append(df.iloc[last,4])
 
-        ema.append(df.iloc[last,9])
-        sma.append(df.iloc[last,7])
+        # ema.append(df.iloc[last,9])
+        # sma.append(df.iloc[last,7])
 
-        sma = go.Scatter(x=list(x),
-                 y=list(sma),
-                 name="SMA",
-                 mode= 'lines+markers'
-                )
-        ema = go.Scatter(x=list(x),
-                 y=list(ema),
-                 name="EMA",
-                 mode= 'lines+markers'
-                )
+        # sma = go.Scatter(x=list(x),
+        #          y=list(sma),
+        #          name="SMA",
+        #          mode= 'lines+markers'
+        #         )
+        # ema = go.Scatter(x=list(x),
+        #          y=list(ema),
+        #          name="EMA",
+        #          mode= 'lines+markers'
+        #         )
 
         candle = plotly.graph_objs.Candlestick(
                 x = list(x),
@@ -106,7 +106,7 @@ def update_graph_scatter(n):
     #         mode= 'lines+markers'
     # )
         print(data)
-        return {'data': [candle,ema,sma],
+        return {'data': [candle,],
                 'layout' : go.Layout(xaxis_rangeslider_visible=False,)}
     else : 
         X.append(X[-1]+1)
