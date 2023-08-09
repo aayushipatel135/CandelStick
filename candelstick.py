@@ -22,7 +22,7 @@ app.layout = html.Div([
     Output("graph", "figure"), 
     Input("toggle-rangeslider", "value"))
 def display_candlestick(value):
-    df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv') # replace with your own data source
+    df = pd.read_csv('data.csv') # replace with your own data source
     fig = go.Figure(go.Candlestick(
         x=df['Date'],
         open=df['AAPL.Open'],
