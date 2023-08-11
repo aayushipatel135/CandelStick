@@ -104,7 +104,7 @@ def update_graph_scatter(n):
         )
         scatter = plotly.graph_objs.Scatter(
             x=list(x),
-            y=list(mid),
+            y=list(open),
             name='Scatter',
             mode= 'lines+markers'
         )
