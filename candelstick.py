@@ -17,22 +17,22 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
 
-x = deque(maxlen = 30)
+x = []
 x.append(df.iloc[0,0])
 
-open = deque(maxlen = 30)
+open = []
 open.append(df.iloc[0,1])
 
-high = deque(maxlen = 30)
+high = []
 high.append(df.iloc[0,2])
 
-low = deque(maxlen = 30)
+low = []
 low.append(df.iloc[0,3])
 
-close = deque(maxlen = 30)
+close = []
 close.append(df.iloc[0,4])
 
-mid = deque(maxlen = 30)
+mid = []
 mid.append((df.iloc[0,4] - df.iloc[0,1])/2)
 
 # ema = deque(maxlen = 20)
@@ -42,10 +42,10 @@ mid.append((df.iloc[0,4] - df.iloc[0,1])/2)
 # sma.append(df.iloc[0,7])
 
 
-X = deque(maxlen = 30)
+X = []
 X.append(1)
 
-Y = deque(maxlen = 30)
+Y = []
 Y.append(1)
 
 last = 1
@@ -71,49 +71,64 @@ app.layout = html.Div(
 def update_graph_scatter(n):
     global last
     if last < len(df) : 
-        
-        x.append(df.iloc[last,0])
-        open.append(df.iloc[last,1])
-        high.append(df.iloc[last,2])
-        low.append(df.iloc[last,3])
-        close.append(df.iloc[last,4])
-        mid.append((df.iloc[last,4] - df.iloc[last,1])/2)
-
-        # ema.append(df.iloc[last,9])
-        # sma.append(df.iloc[last,7])
-
-        # sma = go.Scatter(x=list(x),
-        #          y=list(sma),
-        #          name="SMA",
-        #          mode= 'lines+markers'
-        #         )
-        # ema = go.Scatter(x=list(x),
-        #          y=list(ema),
-        #          name="EMA",
-        #          mode= 'lines+markers'
-        #         )
-
-        candle = plotly.graph_objs.Candlestick(
-                x = list(x),
-                low = list(low),
-                high = list(high),
-                close = list(close),
-                open = list(open),
-                increasing_line_color = 'green',
-                decreasing_line_color = 'red'
-        )
-        scatter = plotly.graph_objs.Scatter(
-            x=list(x),
-            y=list(open),
-            name='Scatter',
-            mode= 'lines+markers'
-        )
-        last = last + 1
-        return {'data': [candle,scatter],
-                'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                     xaxis=dict(range=[min(x),max(x)]),
-                                     yaxis=dict(range=[  min( low  )   ,   max(high)  ] ),
-                                    )}
+        if last < 30 : 
+            x.append(df.iloc[last,0])
+            open.append(df.iloc[last,1])
+            high.append(df.iloc[last,2])
+            low.append(df.iloc[last,3])
+            close.append(df.iloc[last,4])
+            mid.append((df.iloc[last,4] - df.iloc[last,1])/2)
+    
+            candle = plotly.graph_objs.Candlestick(
+                    x = x,
+                    low = low,
+                    high = high,
+                    close = close,
+                    open = open,
+                    increasing_line_color = 'green',
+                    decreasing_line_color = 'red'
+            )
+            scatter = plotly.graph_objs.Scatter(
+                x=x,
+                y=open[:],
+                name='Scatter',
+                mode= 'lines+markers'
+            )
+            last = last + 1
+            return {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                         xaxis=dict(range=[min(x),max(x)]),
+                                         yaxis=dict(range=[  min( low  )   ,   max(high)  ] ),
+                                        )}
+        else : 
+            x.append(df.iloc[last,0])
+            open.append(df.iloc[last,1])
+            high.append(df.iloc[last,2])
+            low.append(df.iloc[last,3])
+            close.append(df.iloc[last,4])
+            mid.append((df.iloc[last,4] - df.iloc[last,1])/2)
+    
+            candle = plotly.graph_objs.Candlestick(
+                    x = x[-30:],
+                    low = low[-30:],
+                    high = high[-30:],
+                    close = close[-30:],
+                    open = open[-30:],
+                    increasing_line_color = 'green',
+                    decreasing_line_color = 'red'
+            )
+            scatter = plotly.graph_objs.Scatter(
+                x=x[-30:],
+                y=open[-30:],
+                name='Scatter',
+                mode= 'lines+markers'
+            )
+            last = last + 1
+            return {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                         xaxis=dict(range=[min(x),max(x)]),
+                                         yaxis=dict(range=[  min( low  )   ,   max(high)  ] ),
+                                        )}
     else : 
         X.append(X[-1]+1)
         Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
