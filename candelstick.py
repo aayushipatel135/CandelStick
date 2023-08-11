@@ -42,10 +42,10 @@ mid.append(int((df.iloc[0,4] + df.iloc[0,1])/2))
 # sma.append(df.iloc[0,7])
 
 
-X = []
+X = deque(maxlen = 30)
 X.append(1)
 
-Y = []
+Y = deque(maxlen = 30)
 Y.append(1)
 
 last = 1
