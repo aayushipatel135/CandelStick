@@ -70,7 +70,7 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
     global last
-    if last < len(df) : 
+    if last < 10 : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,1])
             high.append(df.iloc[last,2])
