@@ -70,7 +70,7 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
     global last
-    if last < 10 : 
+    if last < len(df) : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,1])
             high.append(df.iloc[last,2])
@@ -99,17 +99,17 @@ def update_graph_scatter(n):
                                          xaxis=dict(range=[min(x),max(x)]),
                                          yaxis=dict(range=[  min( low  )   ,   max(high)  ] ),
                                         )}
-    # else : 
-    #     X.append(X[-1]+1)
-    #     Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
-    #     data = plotly.graph_objs.Scatter(
-    #         x=list(X),
-    #         y=list(Y),
-    #         name='Scatter',
-    #         mode= 'lines+markers'
-    #     )
-    #     return {'data': [data],
-    #             'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
+    else : 
+        X.append(X[-1]+1)
+        Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
+        data = plotly.graph_objs.Scatter(
+            x=list(X),
+            y=list(Y),
+            name='Scatter',
+            mode= 'lines+markers'
+        )
+        return {'data': [data],
+                'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
         
 
 
