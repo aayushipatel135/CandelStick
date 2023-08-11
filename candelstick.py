@@ -17,22 +17,22 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
 
-x = deque(maxlen = 20)
+x = []
 x.append(df.iloc[0,0])
 
-open = deque(maxlen = 20)
+open = []
 open.append(df.iloc[0,1])
 
-high = deque(maxlen = 20)
+high = []
 high.append(df.iloc[0,2])
 
-low = deque(maxlen = 20)
+low = []
 low.append(df.iloc[0,3])
 
-close = deque(maxlen = 20)
+close = []
 close.append(df.iloc[0,4])
 
-mid = deque(maxlen = 20)
+mid = []
 mid.append(int((df.iloc[0,4] + df.iloc[0,1])/2))
 
 # ema = deque(maxlen = 20)
@@ -42,10 +42,10 @@ mid.append(int((df.iloc[0,4] + df.iloc[0,1])/2))
 # sma.append(df.iloc[0,7])
 
 
-X = deque(maxlen = 20)
+X = []
 X.append(1)
 
-Y = deque(maxlen = 20)
+Y = []
 Y.append(1)
 
 last = 1
