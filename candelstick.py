@@ -17,7 +17,7 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
 
-x = []
+x = deque(maxlen = 30)
 x.append(df.iloc[0,0])
 
 open = deque(maxlen = 30)
