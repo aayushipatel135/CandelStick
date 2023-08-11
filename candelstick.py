@@ -20,20 +20,20 @@ df = df.set_index(pd.DatetimeIndex(df['Date']))
 x = []
 x.append(df.iloc[0,0])
 
-open = []
+open = deque(maxlen = 100)
 open.append(df.iloc[0,1])
 
-high = []
+high = deque(maxlen = 100)
 high.append(df.iloc[0,2])
 
-low = []
+low = deque(maxlen = 100)
 low.append(df.iloc[0,3])
 
-close = []
+close = deque(maxlen = 100)
 close.append(df.iloc[0,4])
 
-mid = []
-mid.append(int((df.iloc[0,4] + df.iloc[0,1])/2))
+mid = deque(maxlen = 100)
+mid.append(int((df.iloc[0,4] - df.iloc[0,1])/2))
 
 # ema = deque(maxlen = 20)
 # ema.append(df.iloc[0,9])
