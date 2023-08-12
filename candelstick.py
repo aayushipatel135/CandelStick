@@ -10,7 +10,7 @@ import pandas as pd
 # import talib
 
 
-df = pd.read_csv('data.csv')
+df = pd.read_csv('final_data.csv')
 
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
@@ -78,15 +78,15 @@ def update_graph_scatter(n):
             close.append(df.iloc[last,4])
             #mid.append((df.iloc[last,4] - df.iloc[last,1])/2)
     
-            candle = plotly.graph_objs.Candlestick(
-                    x = list(x),
-                    low = list(low),
-                    high = list(high),
-                    close = list(close),
-                    open = list(open),
-                    increasing_line_color = 'green',
-                    decreasing_line_color = 'red'
-            )
+            # candle = plotly.graph_objs.Candlestick(
+            #         x = list(x),
+            #         low = list(low),
+            #         high = list(high),
+            #         close = list(close),
+            #         open = list(open),
+            #         increasing_line_color = 'green',
+            #         decreasing_line_color = 'red'
+            # )
             scatter = plotly.graph_objs.Scatter(
                 x=list(x),
                 y=list(open),
@@ -95,8 +95,8 @@ def update_graph_scatter(n):
             )
             last = last + 1
             print(min(x),max(x))
-            return {'data': [candle,scatter],
-                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+            return {'data': [scatter],
+                    'layout' : go.Layout(#xaxis_rangeslider_visible=True,
                                          xaxis = dict(range = [min(x),max(x)]),
                                         yaxis = dict(range = [min(low)+1000,max(high)+1000]),
                                         )}
