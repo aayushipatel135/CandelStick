@@ -32,8 +32,8 @@ low.append(df.iloc[0,3])
 close = deque(maxlen = 30)
 close.append(df.iloc[0,4])
 
-mid = deque(maxlen = 30)
-mid.append((df.iloc[0,4] - df.iloc[0,1])/2)
+# mid = deque(maxlen = 30)
+# mid.append((df.iloc[0,4] - df.iloc[0,1])/2)
 
 # ema = deque(maxlen = 20)
 # ema.append(df.iloc[0,9])
@@ -94,9 +94,9 @@ def update_graph_scatter(n):
                 mode= 'lines+markers'
             )
             last = last + 1
-            return {'data': [candle],#,scatter],
+            return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                         xaxis = dict(range = [min(x),max(x)]),
+                                         xaxis = dict(range = [x[0],x[-1]]),
                                         yaxis = dict(range = [min(low),max(high)]),
                                         )}
     else : 
