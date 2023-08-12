@@ -11,12 +11,13 @@ import pandas as pd
 
 
 df = pd.read_csv('final_data.csv')
+df = df[:,1:]
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
-df.iloc[:,0] = df.iloc[:,1].apply(lambda x : str(x))
+df.iloc[:,0] = df.iloc[:,0].apply(lambda x : str(x))
 df.iloc[:,1] = df.iloc[:,1].apply(lambda x : round(x,6))
 df.iloc[:,2] = df.iloc[:,2].apply(lambda x : round(x,6))
 df.iloc[:,3] = df.iloc[:,3].apply(lambda x : round(x,6))
