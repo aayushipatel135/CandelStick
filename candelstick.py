@@ -11,7 +11,7 @@ import pandas as pd
 
 
 df = pd.read_csv('data1.csv')
-df = df.set_index(pd.DatetimeIndex(df['Date']))
+#df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
