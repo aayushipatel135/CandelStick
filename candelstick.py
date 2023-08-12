@@ -48,7 +48,7 @@ X.append(1)
 Y = deque(maxlen = 30)
 Y.append(1)
 
-last = len(df) - 1
+last = 0
 
 app = dash.Dash(__name__)
 server = app.server
@@ -70,7 +70,7 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
     global last
-    if last > 0 : 
+    if last < len(df) : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,1])
             high.append(df.iloc[last,2])
@@ -93,7 +93,7 @@ def update_graph_scatter(n):
                 name='Scatter',
                 mode= 'lines+markers'
             )
-            last = last - 1
+            last = last + 1
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                          xaxis=dict(range=[min(x),max(x)]),
