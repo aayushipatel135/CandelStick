@@ -94,10 +94,10 @@ def update_graph_scatter(n):
                 mode= 'lines+markers'
             )
             last = last + 1
-            return {'data': [candle,scatter],
+            return {'data': [candle],#,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                         xaxis = dict(range = [min(x),max(x)]),
                                         yaxis = dict(range = [min(low),max(high)]),
-                                        xaxis = dict(range = [min(x),max(x)],)
                                         )}
     else : 
         X.append(X[-1]+1)
@@ -109,7 +109,10 @@ def update_graph_scatter(n):
             mode= 'lines+markers'
         )
         return {'data': [data],
-                'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),yaxis = dict(range = [min(Y),max(Y)]),)}
+                'layout' : go.Layout(
+                    xaxis=dict(range=[min(X),max(X)]),
+                    yaxis = dict(range = [min(Y),max(Y)]),
+                )}
         
 
 
