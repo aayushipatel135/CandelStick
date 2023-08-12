@@ -10,7 +10,7 @@ import pandas as pd
 # import talib
 
 
-df = pd.read_csv('final_data.csv')
+df = pd.read_csv('data.csv')
 
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
@@ -103,7 +103,7 @@ def update_graph_scatter(n):
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         yaxis = dict(range = [min(low),max(high)]),
-                                        xaxis = dict(range = [ min(x) , max(x)  ],)
+                                        xaxis = dict(range = [min(x),max(x)],)
                                         )}
     else : 
         X.append(X[-1]+1)
