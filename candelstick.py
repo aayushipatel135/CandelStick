@@ -97,7 +97,7 @@ def update_graph_scatter(n):
             print(min(x),max(x))
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                         xaxis = dict(range = [x[0],x[-1]]),
+                                         xaxis = dict(range = [min(x),max(x)]),
                                         yaxis = dict(range = [min(low),max(high)]),
                                         )}
     else : 
