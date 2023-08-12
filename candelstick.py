@@ -93,7 +93,7 @@ def update_graph_scatter(n):
                 name='Scatter',
                 mode= 'lines+markers'
             )
-            last = last + 1
+            last = last - 1
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                          xaxis=dict(range=[min(x),max(x)]),
