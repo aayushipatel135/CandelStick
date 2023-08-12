@@ -16,6 +16,10 @@ df = pd.read_csv('data1.csv')
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
+df.iloc[:,1] = df.iloc[:,1].apply(lambda x : round(x,2))
+df.iloc[:,2] = df.iloc[:,2].apply(lambda x : round(x,2))
+df.iloc[:,3] = df.iloc[:,2].apply(lambda x : round(x,3))
+df.iloc[:,4] = df.iloc[:,2].apply(lambda x : round(x,4))
 
 x = deque(maxlen = 30)
 x.append(df.iloc[0,0])
