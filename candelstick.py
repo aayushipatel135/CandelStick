@@ -12,6 +12,7 @@ import pandas as pd
 
 df = pd.read_csv('final_data.csv')
 df = df.iloc[:,1:]
+df = df.iloc[::-1]
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
@@ -103,7 +104,7 @@ def update_graph_scatter(n):
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         yaxis = dict(range = [min(low),max(high)]),
-                                        #xaxis = dict(range = [ x[0] , x[-1]  ],)
+                                        xaxis = dict(range = [ min(x) , max(x)  ],)
                                         )}
     else : 
         X.append(X[-1]+1)
