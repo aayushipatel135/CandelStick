@@ -17,6 +17,7 @@ df = df.iloc[:,1:]
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
 # df["EMA"] = talib.EMA(df.Close, timeperiod=3)
 
+df.iloc[:,0] = df.iloc[:,1].apply(lambda x : str(x))
 df.iloc[:,1] = df.iloc[:,1].apply(lambda x : round(x,6))
 df.iloc[:,2] = df.iloc[:,2].apply(lambda x : round(x,6))
 df.iloc[:,3] = df.iloc[:,3].apply(lambda x : round(x,6))
