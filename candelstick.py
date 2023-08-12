@@ -102,8 +102,6 @@ def update_graph_scatter(n):
             last = last + 1
             return {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                         xaxis=dict(range=[min(x),max(x)]),
-                                         yaxis=dict(range=[  min( low  )   ,   max(high)  ] ),
                                         )}
     else : 
         X.append(X[-1]+1)
