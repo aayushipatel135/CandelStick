@@ -10,7 +10,7 @@ import pandas as pd
 # import talib
 
 
-df = pd.read_csv('reliance-Sheet4.csv')
+df = pd.read_csv('reliance - Sheet4.csv.csv')
 df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
