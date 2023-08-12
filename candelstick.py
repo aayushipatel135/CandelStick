@@ -10,7 +10,7 @@ import pandas as pd
 # import talib
 
 
-df = pd.read_csv('data1.csv')
+df = pd.read_csv('data.csv')
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
 # df["RSI"] = talib.RSI(df.Close, timeperiod=3)
@@ -58,7 +58,7 @@ app.layout = html.Div(
         dcc.Graph(id = 'live-graph', animate = True),
         dcc.Interval(
             id = 'graph-update',
-            interval = 8000,
+            interval = 3000,
             n_intervals = 0
         ),
     ]
