@@ -48,7 +48,7 @@ X.append(1)
 Y = deque(maxlen = 30)
 Y.append(1)
 
-last = 1
+last = len(df) - 1
 
 app = dash.Dash(__name__)
 server = app.server
@@ -70,7 +70,7 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
     global last
-    if last < len(df) : 
+    if last > 0 : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,1])
             high.append(df.iloc[last,2])
