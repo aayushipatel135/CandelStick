@@ -10,7 +10,7 @@ import pandas as pd
 # import talib
 
 
-df = pd.read_csv('final_data.csv')
+df = pd.read_csv('data.csv')
 
 #df = df.set_index(pd.DatetimeIndex(df['Date']))
 # df["SMA"] = talib.SMA(df.Close, timeperiod=3)
