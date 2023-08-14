@@ -7,45 +7,36 @@ import random
 import plotly.graph_objs as go
 from collections import deque
 import pandas as pd
-# import talib
+import dash_daq as daq
 
+df = pd.read_csv('/home/aayushi/Aayushi/daiict/CandleStick/CandelStick-main/data/NIFTY 50 - 1 minute_with_indicators_.csv')
 
-df = pd.read_csv('data.csv')
-
-#df = df.set_index(pd.DatetimeIndex(df['Date']))
-# df["SMA"] = talib.SMA(df.Close, timeperiod=3)
-# df["RSI"] = talib.RSI(df.Close, timeperiod=3)
-# df["EMA"] = talib.EMA(df.Close, timeperiod=3)
-
-x = deque(maxlen = 30)
+#x = deque(maxlen = 20)
+x = []
 x.append(df.iloc[0,0])
 
-open = deque(maxlen = 30)
-open.append(df.iloc[0,1])
+#open = deque(maxlen = 20)
+open = []
+open.append(df.iloc[0,4])
 
-high = deque(maxlen = 30)
+#high = deque(maxlen = 20)
+high = []
 high.append(df.iloc[0,2])
 
-low = deque(maxlen = 30)
+#low = deque(maxlen = 20)
+low = []
 low.append(df.iloc[0,3])
 
-close = deque(maxlen = 30)
-close.append(df.iloc[0,4])
+#close = deque(maxlen = 20)
+close = []
+close.append(df.iloc[0,1])
 
-# mid = deque(maxlen = 30)
-# mid.append((df.iloc[0,4] - df.iloc[0,1])/2)
-
-# ema = deque(maxlen = 20)
-# ema.append(df.iloc[0,9])
-
-# sma = deque(maxlen = 20)
-# sma.append(df.iloc[0,7])
-
-
-X = deque(maxlen = 30)
+#X = deque(maxlen = 20)
+X = []
 X.append(1)
 
-Y = deque(maxlen = 30)
+#Y = deque(maxlen = 20)
+Y = []
 Y.append(1)
 
 last = 0
@@ -55,10 +46,10 @@ server = app.server
 
 app.layout = html.Div(
     [
-        dcc.Graph(id = 'live-graph', animate = True),
+        dcc.Graph(id = 'live-graph', animate = False),
         dcc.Interval(
             id = 'graph-update',
-            interval = 3000,
+            interval = 2500,
             n_intervals = 0
         ),
     ]
@@ -70,23 +61,24 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
     global last
-    if last < len(df) : 
+    #return f'The stop button has been clicked '
+    if last < 50 : 
+        if last < 15 : 
             x.append(df.iloc[last,0])
-            open.append(df.iloc[last,1])
+            open.append(df.iloc[last,4])
             high.append(df.iloc[last,2])
             low.append(df.iloc[last,3])
-            close.append(df.iloc[last,4])
-            #mid.append((df.iloc[last,4] - df.iloc[last,1])/2)
+            close.append(df.iloc[last,1])
     
-            # candle = plotly.graph_objs.Candlestick(
-            #         x = list(x),
-            #         low = list(low),
-            #         high = list(high),
-            #         close = list(close),
-            #         open = list(open),
-            #         increasing_line_color = 'green',
-            #         decreasing_line_color = 'red'
-            # )
+            candle = plotly.graph_objs.Candlestick(
+                    x = list(x),
+                    low = list(low),
+                    high = list(high),
+                    close = list(close),
+                    open = list(open),
+                    increasing_line_color = 'green',
+                    decreasing_line_color = 'red'
+            )
             scatter = plotly.graph_objs.Scatter(
                 x=list(x),
                 y=list(open),
@@ -94,11 +86,46 @@ def update_graph_scatter(n):
                 mode= 'lines+markers'
             )
             last = last + 1
-            print(min(x),max(x))
-            return {'data': [scatter],
-                    'layout' : go.Layout(#xaxis_rangeslider_visible=True,
-                                         xaxis = dict(range = [min(x),max(x)]),
-                                        yaxis = dict(range = [min(low)+1000,max(high)+1000]),
+            print(x[0] ,x[-1])
+            return {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                        xaxis = dict(
+                                            autorange=False,
+                                            range = [x[0] , x[-1] ],
+                                            type='date'),
+                                        yaxis = dict(range = [min(low),max(high)]),
+                                        )}
+        else : 
+            x.append(df.iloc[last,0])
+            open.append(df.iloc[last,4])
+            high.append(df.iloc[last,2])
+            low.append(df.iloc[last,3])
+            close.append(df.iloc[last,1])
+    
+            candle = plotly.graph_objs.Candlestick(
+                    x = list(x),
+                    low = list(low),
+                    high = list(high),
+                    close = list(close),
+                    open = list(open),
+                    increasing_line_color = 'green',
+                    decreasing_line_color = 'red'
+            )
+            scatter = plotly.graph_objs.Scatter(
+                x=list(x),
+                y=list(open),
+                name='Scatter',
+                mode= 'lines+markers'
+            )
+            last = last + 1
+            print(x[-15],x[-1])
+            return {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                        xaxis = dict(
+                                            autorange=False,
+                                            range = [x[-15] , x[-1] ],
+                                            type='date'),
+                                        yaxis = dict(range = [min(low),max(high)]),
                                         )}
     else : 
         X.append(X[-1]+1)
@@ -114,9 +141,6 @@ def update_graph_scatter(n):
                     xaxis=dict(range=[min(X),max(X)]),
                     yaxis = dict(range = [min(Y),max(Y)]),
                 )}
-        
-
-
 
 if __name__ == '__main__':
     app.run_server(debug=False)
