@@ -53,86 +53,95 @@ app.layout = html.Div(
             interval = 2500,
             n_intervals = 0
         ),
+        html.Button('Stop', id='btn-nclicks-1', n_clicks=0),
     ]
 )
 @app.callback(
     Output('live-graph', 'figure'),
-    [ Input('graph-update', 'n_intervals') ]
+    [ Input('graph-update', 'n_intervals') ],
+    [ Input('btn-nclicks-3', 'n_clicks') ] 
 )
 
-def update_graph_scatter(n):
+def update_graph_scatter(n,btn1):
     global last
     #return f'The stop button has been clicked '
-    if last < 30 : 
-        if last < 15 : 
-            x.append(df.iloc[last,0])
-            open.append(df.iloc[last,4])
-            high.append(df.iloc[last,2])
-            low.append(df.iloc[last,3])
-            close.append(df.iloc[last,1])
-    
-            candle = plotly.graph_objs.Candlestick(
-                    x = list(x),
-                    low = list(low),
-                    high = list(high),
-                    close = list(close),
-                    open = list(open),
-                    increasing_line_color = 'green',
-                    decreasing_line_color = 'red'
-            )
-            scatter = plotly.graph_objs.Scatter(
-                x=list(x),
-                y=list(open),
-                name='Scatter',
-                mode= 'lines+markers'
-            )
-            last = last + 1
-            print(x[0] ,x[-1])
-            return {'data': [candle,scatter],
-                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                        xaxis = dict(
-                                            autorange=False,
-                                            range = [x[0] , x[-1] ],
-                                            type='date'),
-                                        yaxis = dict(range = [min(low),max(high)]),
-                                        )}
-        else : 
-            x.append(df.iloc[last,0])
-            open.append(df.iloc[last,4])
-            high.append(df.iloc[last,2])
-            low.append(df.iloc[last,3])
-            close.append(df.iloc[last,1])
-    
-            candle = plotly.graph_objs.Candlestick(
-                    x = list(x),
-                    low = list(low),
-                    high = list(high),
-                    close = list(close),
-                    open = list(open),
-                    increasing_line_color = 'green',
-                    decreasing_line_color = 'red'
-            )
-            scatter = plotly.graph_objs.Scatter(
-                x=list(x),
-                y=list(open),
-                name='Scatter',
-                mode= 'lines+markers'
-            )
-            last = last + 1
-            print(x[-15],x[-1])
-            return {'data': [candle,scatter],
-                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                        xaxis = dict(
-                                            autorange=False,
-                                            range = [x[-15] , x[-1] ],
-                                            type='date'),
-                                        yaxis = dict(range = [min(low),max(high)]),
-                                        )}
-    else : 
+    if click is not None:
+        #my code here
         func = request.environ.get('werkzeug.server.shutdown')
         if func is None:
             raise RuntimeError('Not running with the Werkzeug Server')
         func()
+    else:
+            if last < 30 : 
+                if last < 15 : 
+                    x.append(df.iloc[last,0])
+                    open.append(df.iloc[last,4])
+                    high.append(df.iloc[last,2])
+                    low.append(df.iloc[last,3])
+                    close.append(df.iloc[last,1])
+            
+                    candle = plotly.graph_objs.Candlestick(
+                            x = list(x),
+                            low = list(low),
+                            high = list(high),
+                            close = list(close),
+                            open = list(open),
+                            increasing_line_color = 'green',
+                            decreasing_line_color = 'red'
+                    )
+                    scatter = plotly.graph_objs.Scatter(
+                        x=list(x),
+                        y=list(open),
+                        name='Scatter',
+                        mode= 'lines+markers'
+                )
+                last = last + 1
+                print(x[0] ,x[-1])
+                return {'data': [candle,scatter],
+                        'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                            xaxis = dict(
+                                                autorange=False,
+                                                range = [x[0] , x[-1] ],
+                                                type='date'),
+                                            yaxis = dict(range = [min(low),max(high)]),
+                                            )}
+            else : 
+                x.append(df.iloc[last,0])
+                open.append(df.iloc[last,4])
+                high.append(df.iloc[last,2])
+                low.append(df.iloc[last,3])
+                close.append(df.iloc[last,1])
+        
+                candle = plotly.graph_objs.Candlestick(
+                        x = list(x),
+                        low = list(low),
+                        high = list(high),
+                        close = list(close),
+                        open = list(open),
+                        increasing_line_color = 'green',
+                        decreasing_line_color = 'red'
+                )
+                scatter = plotly.graph_objs.Scatter(
+                    x=list(x),
+                    y=list(open),
+                    name='Scatter',
+                    mode= 'lines+markers'
+                )
+                last = last + 1
+                print(x[-15],x[-1])
+                return {'data': [candle,scatter],
+                        'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                            xaxis = dict(
+                                                autorange=False,
+                                                range = [x[-15] , x[-1] ],
+                                                type='date'),
+                                            yaxis = dict(range = [min(low),max(high)]),
+                                            )}
+        else : 
+            func = request.environ.get('werkzeug.server.shutdown')
+            if func is None:
+                raise RuntimeError('Not running with the Werkzeug Server')
+            func()
         # X.append(X[-1]+1)
         # Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
         # data = plotly.graph_objs.Scatter(
