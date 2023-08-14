@@ -94,17 +94,17 @@ def update_graph_scatter(n,btn1):
                         y=list(open),
                         name='Scatter',
                         mode= 'lines+markers'
-                )
-                last = last + 1
-                print(x[0] ,x[-1])
-                return {'data': [candle,scatter],
-                        'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                            xaxis = dict(
-                                                autorange=False,
-                                                range = [x[0] , x[-1] ],
-                                                type='date'),
-                                            yaxis = dict(range = [min(low),max(high)]),
-                                            )}
+                    )
+                    last = last + 1
+                    print(x[0] ,x[-1])
+                    return {'data': [candle,scatter],
+                            'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                                xaxis = dict(
+                                                    autorange=False,
+                                                    range = [x[0] , x[-1] ],
+                                                    type='date'),
+                                                yaxis = dict(range = [min(low),max(high)]),
+                                                )}
                 else : 
                     x.append(df.iloc[last,0])
                     open.append(df.iloc[last,4])
