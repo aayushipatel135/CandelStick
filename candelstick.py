@@ -2,6 +2,7 @@ import dash
 from dash.dependencies import Output, Input
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 import plotly
 import random
 import plotly.graph_objs as go
@@ -53,7 +54,9 @@ app.layout = html.Div(
             interval = 2500,
             n_intervals = 0
         ),
-        html.Button('Stop', id='btn-nclicks-1', n_clicks=0),
+        dbc.Button(
+            "Click me", id="example-button", className="me-2", n_clicks=0
+        ),
     ]
 )
 @app.callback(
@@ -62,11 +65,12 @@ app.layout = html.Div(
     [ Input('btn-nclicks-3', 'n_clicks') ] 
 )
 
-def update_graph_scatter(n,btn1):
+def update_graph_scatter(n,click):
     global last
     #return f'The stop button has been clicked '
     if click is not None:
         #my code here
+        # button is clicked
         func = request.environ.get('werkzeug.server.shutdown')
         if func is None:
             raise RuntimeError('Not running with the Werkzeug Server')
