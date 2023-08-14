@@ -9,7 +9,7 @@ from collections import deque
 import pandas as pd
 import dash_daq as daq
 
-df = pd.read_csv('/home/aayushi/Aayushi/daiict/CandleStick/CandelStick-main/data/NIFTY 50 - 1 minute_with_indicators_.csv')
+df = pd.read_csv('working.csv')
 
 #x = deque(maxlen = 20)
 x = []
