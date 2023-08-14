@@ -62,7 +62,7 @@ app.layout = html.Div(
 def update_graph_scatter(n):
     global last
     #return f'The stop button has been clicked '
-    if last < 10 : 
+    if last < 30 : 
         if last < 15 : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,4])
