@@ -62,7 +62,7 @@ app.layout = html.Div(
 def update_graph_scatter(n):
     global last
     #return f'The stop button has been clicked '
-    if last < 50 : 
+    if last < 10 : 
         if last < 15 : 
             x.append(df.iloc[last,0])
             open.append(df.iloc[last,4])
@@ -128,19 +128,23 @@ def update_graph_scatter(n):
                                         yaxis = dict(range = [min(low),max(high)]),
                                         )}
     else : 
-        X.append(X[-1]+1)
-        Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
-        data = plotly.graph_objs.Scatter(
-            x=list(X),
-            y=list(Y),
-            name='Scatter',
-            mode= 'lines+markers'
-        )
-        return {'data': [data],
-                'layout' : go.Layout(
-                    xaxis=dict(range=[min(X),max(X)]),
-                    yaxis = dict(range = [min(Y),max(Y)]),
-                )}
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            raise RuntimeError('Not running with the Werkzeug Server')
+        func()
+        # X.append(X[-1]+1)
+        # Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
+        # data = plotly.graph_objs.Scatter(
+        #     x=list(X),
+        #     y=list(Y),
+        #     name='Scatter',
+        #     mode= 'lines+markers'
+        # )
+        # return {'data': [data],
+        #         'layout' : go.Layout(
+        #             xaxis=dict(range=[min(X),max(X)]),
+        #             yaxis = dict(range = [min(Y),max(Y)]),
+        #         )}
 
 if __name__ == '__main__':
     app.run_server(debug=False)
