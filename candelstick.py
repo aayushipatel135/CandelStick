@@ -24,6 +24,7 @@ x, y = [], []
 x.append(0); y.append(1)
 
 app = dash.Dash(__name__)
+server = app.server
 
 app.layout = html.Div([
     daq.ToggleSwitch(
