@@ -11,17 +11,11 @@ import pandas as pd
 import dash_daq as daq
 from flask import request
 
-# import dash
-# import dash_daq as daq
-# from dash.dependencies import Output, Input
-# import dash_core_components as dcc
-# import dash_html_components as html
-# import plotly.graph_objs as go
-# import random
+
 
 # Initialising variables
-x, y = [], []
-x.append(0); y.append(1)
+X, y = [], []
+X.append(0); y.append(1)
 
 app = dash.Dash(__name__)
 server = app.server
@@ -49,7 +43,7 @@ app.layout = html.Div([
 
 def update_output(value,data):
 
-    x.append(x[-1] + 1)
+    X.append(X[-1] + 1)
     y.append(y[-1] + y[-1] * random.uniform(-0.1, 0.1))
 
     string1 = 'The switch is off'
@@ -61,9 +55,9 @@ def update_output(value,data):
                       xaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='rgba(255,255,255,255)')))
 
     fig2 = go.Figure()
-    fig2.add_trace(go.Scatter(x=list(x), y=list(y), name='Random 1', mode='lines'))
+    fig2.add_trace(go.Scatter(x=list(X), y=list(y), name='Random 1', mode='lines'))
     fig2.update_layout(
-        xaxis=dict(range=[x[0], x[-1]]),
+        xaxis=dict(range=[X[0], X[-1]]),
         yaxis=dict(range=[min(y) - 0.1, max(y) + 0.1]),
         height=385)
 
