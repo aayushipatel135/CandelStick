@@ -57,22 +57,28 @@ app.layout = html.Div(
             n_intervals = 0,
             disabled = graph_update_disabled
         ),
+        daq.ToggleSwitch(
+            id='my-toggle-switch',
+            value=False
+        ),
+        html.Div(id='toggle-switch-output'),
         # dbc.Button(
         #     "Click me", id="example-button", className="me-2", n_clicks=0
         # ),
     ]
 )
 @app.callback(
-    Output('graph-update', 'disabled'),
-    Output('live-graph', 'figure'),
-    Input('graph-update', 'n_intervals'),
+    [Output('toggle-switch-output', 'children'),
+    Output('live-graph', 'figure'), ]
+    [Input('my-toggle-switch', 'value'),
+    Input('graph-update', 'n_intervals'),]
     # [ Input('btn-nclicks-3', 'n_clicks') ] 
 )
 
-def update_graph_scatter(n):
-            global last
-            global keepPlot
-            global graph_update_disabled
+def update_graph_scatter(value,n):
+    global last
+    global keepPlot
+    global graph_update_disabled
     #return f'The stop button has been clicked '
     
 
@@ -86,6 +92,7 @@ def update_graph_scatter(n):
     #         raise RuntimeError('Not running with the Werkzeug Server')
     #     func()
     # else:
+    if value == False :
             if last < 30 : 
                 if last < 15 : 
                     x.append(df.iloc[last,0])
@@ -152,8 +159,56 @@ def update_graph_scatter(n):
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 )}
             else : 
-                graph_update_disabled = True
-                keepPlot = False
+                candle = plotly.graph_objs.Candlestick(
+                            x = list(x),
+                            low = list(low),
+                            high = list(high),
+                            close = list(close),
+                            open = list(open),
+                            increasing_line_color = 'green',
+                            decreasing_line_color = 'red'
+                )
+                scatter = plotly.graph_objs.Scatter(
+                    x=list(x),
+                    y=list(open),
+                    name='Scatter',
+                    mode= 'lines+markers'
+                )
+                print(x[-15],x[-1])
+                return {'data': [candle,scatter],
+                        'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                xaxis = dict(autorange=False,
+                                            range = [x[-15] , x[-1] ],
+                                            type='date'),
+                                            yaxis = dict(range = [min(low),max(high)]),
+                        )}
+    else : 
+            
+        candle = plotly.graph_objs.Candlestick(
+                x = list(x),
+                low = list(low),
+                high = list(high),
+                close = list(close),
+                open = list(open),
+                increasing_line_color = 'green',
+                decreasing_line_color = 'red'
+        )
+        scatter = plotly.graph_objs.Scatter(
+            x=list(x),
+            y=list(open),
+            name='Scatter',
+            mode= 'lines+markers'
+        )
+        print(x[-15],x[-1])
+        return {'data': [candle,scatter],
+                'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                    xaxis = dict(
+                                    autorange=False,
+                                    range = [x[-15] , x[-1] ],
+                                    type='date'),
+                                    yaxis = dict(range = [min(low),max(high)]),
+        )}
+        
                 # func = request.environ.get('werkzeug.server.shutdown')
                 # if func is None:
                 #     raise RuntimeError('Not running with the Werkzeug Server')
