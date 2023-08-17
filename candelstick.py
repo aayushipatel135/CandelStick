@@ -43,6 +43,8 @@ Y.append(1)
 
 last = 0
 
+graph_update_disabled = False
+
 app = dash.Dash(__name__)
 server = app.server
 
@@ -52,7 +54,8 @@ app.layout = html.Div(
         dcc.Interval(
             id = 'graph-update',
             interval = 2500,
-            n_intervals = 0
+            n_intervals = 0,
+            disabled = graph_update_disabled
         ),
         # dbc.Button(
         #     "Click me", id="example-button", className="me-2", n_clicks=0
@@ -60,6 +63,7 @@ app.layout = html.Div(
     ]
 )
 @app.callback(
+    Output('graph-update', 'disabled'),
     Output('live-graph', 'figure'),
     [ Input('graph-update', 'n_intervals') ],
     # [ Input('btn-nclicks-3', 'n_clicks') ] 
@@ -67,6 +71,8 @@ app.layout = html.Div(
 
 def update_graph_scatter(n):
             global last
+            global keepPlot
+            global graph_updates_disabled = False
     #return f'The stop button has been clicked '
     
 
@@ -146,10 +152,12 @@ def update_graph_scatter(n):
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 )}
             else : 
-                func = request.environ.get('werkzeug.server.shutdown')
-                if func is None:
-                    raise RuntimeError('Not running with the Werkzeug Server')
-                func()
+                graph_updates_disabled = True
+                keepPlot = False
+                # func = request.environ.get('werkzeug.server.shutdown')
+                # if func is None:
+                #     raise RuntimeError('Not running with the Werkzeug Server')
+                # func()
 
 if __name__ == '__main__':
     app.run_server(debug=False)
