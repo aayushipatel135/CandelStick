@@ -24,6 +24,7 @@ low.append(df.iloc[0,3])
 close = []
 close.append(df.iloc[0,1])
 last = 0
+time_interval = 1500
 
 
 # Initialising variables
@@ -43,7 +44,7 @@ app.layout = html.Div([
     dcc.Graph(id='live-graph', animate=False),
             dcc.Interval(
                 id='graph-update',
-                interval=1000
+                interval=time_interval
             ),
 ])
 
@@ -56,6 +57,7 @@ app.layout = html.Div([
 
 def update_output(value,data):
     global last
+    global time_interval
 
     X.append(X[-1] + 1)
     y.append(y[-1] + y[-1] * random.uniform(-0.1, 0.1))
@@ -76,6 +78,7 @@ def update_output(value,data):
         height=385)
 
     if value==False:
+        time_interval = 1500000
         if last < 15 : 
             candle = plotly.graph_objs.Candlestick(
                     x = list(x),
@@ -137,6 +140,7 @@ def update_output(value,data):
                     )}
                    )
     else:
+        time_interval = 1500
         if last < len(df) : 
                 if last < 15 : 
                     x.append(df.iloc[last,0])
