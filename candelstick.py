@@ -66,7 +66,7 @@ app.layout = html.Div(
 )
 
 def update_graph_scatter(n,click):
-    global last
+            global last
     #return f'The stop button has been clicked '
     
 
