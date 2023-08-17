@@ -65,7 +65,7 @@ app.layout = html.Div(
 @app.callback(
     Output('graph-update', 'disabled'),
     Output('live-graph', 'figure'),
-    [ Input('graph-update', 'n_intervals') ],
+    Input('graph-update', 'n_intervals'),
     # [ Input('btn-nclicks-3', 'n_clicks') ] 
 )
 
