@@ -68,6 +68,10 @@ app.layout = html.Div(
 def update_graph_scatter(n,click):
     global last
     #return f'The stop button has been clicked '
+    
+
+    # if len(X1) >= 100:
+    #     graph_updates_disabled = True
     if click is not None:
         #my code here
         # button is clicked
