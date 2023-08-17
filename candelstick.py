@@ -99,7 +99,7 @@ def update_output(value,data):
                 'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                     xaxis = dict(
                                     autorange=False,
-                                    range = [x[-15] , x[-1] ],
+                                    range = [x[-1] , x[-1] ],
                                     type='date'),
                                     yaxis = dict(range = [min(low),max(high)]),
                 )}
