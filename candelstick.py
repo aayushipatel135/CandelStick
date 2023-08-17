@@ -62,7 +62,7 @@ app.layout = html.Div(
 @app.callback(
     Output('live-graph', 'figure'),
     [ Input('graph-update', 'n_intervals') ],
-    [ Input('btn-nclicks-3', 'n_clicks') ] 
+    # [ Input('btn-nclicks-3', 'n_clicks') ] 
 )
 
 def update_graph_scatter(n,click):
