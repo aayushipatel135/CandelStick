@@ -29,6 +29,7 @@ x, y = [], []
 x.append(0); y.append(1)
 
 app = dash.Dash(__name__)
+server = app.server
 
 app.layout = html.Div([
     daq.ToggleSwitch(
@@ -78,7 +79,7 @@ def update_output(value,data):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
 
 
 # df = pd.read_csv('working.csv')
