@@ -54,9 +54,9 @@ app.layout = html.Div(
             interval = 2500,
             n_intervals = 0
         ),
-        dbc.Button(
-            "Click me", id="example-button", className="me-2", n_clicks=0
-        ),
+        # dbc.Button(
+        #     "Click me", id="example-button", className="me-2", n_clicks=0
+        # ),
     ]
 )
 @app.callback(
@@ -150,19 +150,6 @@ def update_graph_scatter(n,click):
                 if func is None:
                     raise RuntimeError('Not running with the Werkzeug Server')
                 func()
-        # X.append(X[-1]+1)
-        # Y.append(Y[-1]+Y[-1] * random.uniform(-0.1,0.1))
-        # data = plotly.graph_objs.Scatter(
-        #     x=list(X),
-        #     y=list(Y),
-        #     name='Scatter',
-        #     mode= 'lines+markers'
-        # )
-        # return {'data': [data],
-        #         'layout' : go.Layout(
-        #             xaxis=dict(range=[min(X),max(X)]),
-        #             yaxis = dict(range = [min(Y),max(Y)]),
-        #         )}
 
 if __name__ == '__main__':
     app.run_server(debug=False)
