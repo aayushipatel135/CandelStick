@@ -72,14 +72,14 @@ def update_graph_scatter(n,click):
 
     # if len(X1) >= 100:
     #     graph_updates_disabled = True
-    if click is not None:
-        #my code here
-        # button is clicked
-        func = request.environ.get('werkzeug.server.shutdown')
-        if func is None:
-            raise RuntimeError('Not running with the Werkzeug Server')
-        func()
-    else:
+    # if click is not None:
+    #     #my code here
+    #     # button is clicked
+    #     func = request.environ.get('werkzeug.server.shutdown')
+    #     if func is None:
+    #         raise RuntimeError('Not running with the Werkzeug Server')
+    #     func()
+    # else:
             if last < 30 : 
                 if last < 15 : 
                     x.append(df.iloc[last,0])
