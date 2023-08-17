@@ -95,14 +95,14 @@ def update_output(value,data):
             data =  [candle,scatter]
         )
         #fig = dict(data=data, layout=layout)
-        fig.update_layout(
-            xaxis_rangeslider_visible=True,
-            xaxis = dict(autorange=False,
-                        range = [x[-15] , x[-1] ],
-                        type='date'),
-                        yaxis = dict(range = [min(low),max(high)]),
-        )
-        return fig
+        # fig.update_layout(
+        #     xaxis_rangeslider_visible=True,
+        #     xaxis = dict(autorange=False,
+        #                 range = [x[-15] , x[-1] ],
+        #                 type='date'),
+        #                 yaxis = dict(range = [min(low),max(high)]),
+        # )
+        return (string1,fig)
         # return {'data': [candle,scatter],
         #         'layout' : go.Layout(xaxis_rangeslider_visible=True,
         #                             xaxis = dict(
