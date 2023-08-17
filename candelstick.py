@@ -91,14 +91,26 @@ def update_output(value,data):
             mode= 'lines+markers'
         )
         print(x[-1],x[-1])
-        return {'data': [candle,scatter],
-                'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                                    xaxis = dict(
-                                    autorange=False,
-                                    range = [x[-15] , x[-1] ],
-                                    type='date'),
-                                    yaxis = dict(range = [min(low),max(high)]),
-        )}
+        fig = go.Figure(
+            data =  [candle,scatter]
+        )
+        #fig = dict(data=data, layout=layout)
+        fig.update_layout(
+            xaxis_rangeslider_visible=True,
+            xaxis = dict(autorange=False,
+                        range = [x[-15] , x[-1] ],
+                        type='date'),
+                        yaxis = dict(range = [min(low),max(high)]),
+        )
+        return fig
+        # return {'data': [candle,scatter],
+        #         'layout' : go.Layout(xaxis_rangeslider_visible=True,
+        #                             xaxis = dict(
+        #                             autorange=False,
+        #                             range = [x[-15] , x[-1] ],
+        #                             type='date'),
+        #                             yaxis = dict(range = [min(low),max(high)]),
+        # )}
     else:
         return (string2,fig2)
 
