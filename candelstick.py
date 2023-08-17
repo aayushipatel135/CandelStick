@@ -50,6 +50,11 @@ server = app.server
 
 app.layout = html.Div(
     [
+        daq.ToggleSwitch(
+            id='my-toggle-switch',
+            value=False
+        ),
+        html.Div(id='toggle-switch-output'),
         dcc.Graph(id = 'live-graph', animate = False),
         dcc.Interval(
             id = 'graph-update',
@@ -57,11 +62,6 @@ app.layout = html.Div(
             n_intervals = 0,
             disabled = graph_update_disabled
         ),
-        daq.ToggleSwitch(
-            id='my-toggle-switch',
-            value=False
-        ),
-        html.Div(id='toggle-switch-output'),
         # dbc.Button(
         #     "Click me", id="example-button", className="me-2", n_clicks=0
         # ),
