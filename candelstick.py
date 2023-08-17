@@ -55,6 +55,7 @@ app.layout = html.Div(
             value=False
         ),
         html.Div(id='toggle-switch-output'),
+        
         dcc.Graph(id = 'live-graph', animate = False),
         dcc.Interval(
             id = 'graph-update',
@@ -77,8 +78,6 @@ app.layout = html.Div(
 
 def update_graph_scatter(value,n):
     global last
-    global keepPlot
-    global graph_update_disabled
     #return f'The stop button has been clicked '
     
 
@@ -93,7 +92,7 @@ def update_graph_scatter(value,n):
     #     func()
     # else:
     if value == False :
-            if last < 30 : 
+            if last < len(df) : 
                 if last < 15 : 
                     x.append(df.iloc[last,0])
                     open.append(df.iloc[last,4])
@@ -101,8 +100,7 @@ def update_graph_scatter(value,n):
                     low.append(df.iloc[last,3])
                     close.append(df.iloc[last,1])
             
-                    candle = plotly.graph_objs.Candlestick(
-                            x = list(x),
+                    candle = plotly.graph_objs.Candlestick(x = list(x),
                             low = list(low),
                             high = list(high),
                             close = list(close),
@@ -182,8 +180,7 @@ def update_graph_scatter(value,n):
                                             type='date'),
                                             yaxis = dict(range = [min(low),max(high)]),
                         )}
-    else : 
-            
+    else :         
         candle = plotly.graph_objs.Candlestick(
                 x = list(x),
                 low = list(low),
