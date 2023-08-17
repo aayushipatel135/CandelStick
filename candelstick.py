@@ -94,23 +94,16 @@ def update_output(value,data):
         fig = go.Figure(
             data =  [candle,scatter]
         )
-        #fig = dict(data=data, layout=layout)
-        # fig.update_layout(
-        #     xaxis_rangeslider_visible=True,
-        #     xaxis = dict(autorange=False,
-        #                 range = [x[-15] , x[-1] ],
-        #                 type='date'),
-        #                 yaxis = dict(range = [min(low),max(high)]),
-        # )
-        return (string1,fig)
-        # return {'data': [candle,scatter],
-        #         'layout' : go.Layout(xaxis_rangeslider_visible=True,
-        #                             xaxis = dict(
-        #                             autorange=False,
-        #                             range = [x[-15] , x[-1] ],
-        #                             type='date'),
-        #                             yaxis = dict(range = [min(low),max(high)]),
-        # )}
+        return (string1,
+                {'data': [candle,scatter],
+                'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                    xaxis = dict(
+                                    autorange=False,
+                                    range = [x[-15] , x[-1] ],
+                                    type='date'),
+                                    yaxis = dict(range = [min(low),max(high)]),
+                )}
+               )
     else:
         if last < len(df) : 
                 if last < 15 : 
@@ -180,8 +173,8 @@ def update_output(value,data):
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 ) }
                            )
-            else : 
-                candle = plotly.graph_objs.Candlestick(
+        else : 
+            candle = plotly.graph_objs.Candlestick(
                             x = list(x),
                             low = list(low),
                             high = list(high),
@@ -189,22 +182,23 @@ def update_output(value,data):
                             open = list(open),
                             increasing_line_color = 'green',
                             decreasing_line_color = 'red'
-                )
-                scatter = plotly.graph_objs.Scatter(
+            )
+            scatter = plotly.graph_objs.Scatter(
                     x=list(x),
                     y=list(open),
                     name='Scatter',
                     mode= 'lines+markers'
-                )
-                print(x[-15],x[-1])
-                return (string2,{'data': [candle,scatter],
-                        'layout' : go.Layout(xaxis_rangeslider_visible=True,
+            )
+            print(x[-15],x[-1])
+            return (string2,{'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                 xaxis = dict(autorange=False,
                                             range = [x[-15] , x[-1] ],
                                             type='date'),
                                             yaxis = dict(range = [min(low),max(high)]),
-                        )})
-        return (string2,fig2)
+                    )}
+            )
+        #return (string2,fig2)
 
 
 if __name__ == '__main__':
