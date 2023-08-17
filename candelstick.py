@@ -23,7 +23,7 @@ low = []
 low.append(df.iloc[0,3])
 close = []
 close.append(df.iloc[0,1])
-
+last = 0
 
 
 # Initialising variables
@@ -55,6 +55,7 @@ app.layout = html.Div([
      Input('graph-update', 'n_intervals')])
 
 def update_output(value,data):
+    global last
 
     X.append(X[-1] + 1)
     y.append(y[-1] + y[-1] * random.uniform(-0.1, 0.1))
