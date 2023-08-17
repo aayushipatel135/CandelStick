@@ -72,7 +72,7 @@ app.layout = html.Div(
 def update_graph_scatter(n):
             global last
             global keepPlot
-            global graph_update_disabled = False
+            global graph_update_disabled
     #return f'The stop button has been clicked '
     
 
