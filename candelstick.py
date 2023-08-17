@@ -78,7 +78,7 @@ def update_output(value,data):
         height=385)
 
     if value==False:
-        time_interval = 1500000
+        time_interval = 9999999999999900000
         if last < 15 : 
             candle = plotly.graph_objs.Candlestick(
                     x = list(x),
