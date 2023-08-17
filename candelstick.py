@@ -72,7 +72,7 @@ app.layout = html.Div(
 def update_graph_scatter(n):
             global last
             global keepPlot
-            global graph_updates_disabled = False
+            global graph_update_disabled = False
     #return f'The stop button has been clicked '
     
 
@@ -152,7 +152,7 @@ def update_graph_scatter(n):
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 )}
             else : 
-                graph_updates_disabled = True
+                graph_update_disabled = True
                 keepPlot = False
                 # func = request.environ.get('werkzeug.server.shutdown')
                 # if func is None:
