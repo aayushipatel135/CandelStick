@@ -48,15 +48,15 @@ app.layout = html.Div([
 
 ])
 
-@app.callback(
-    Output("graph-update", "interval"),
-    Input('my-toggle-switch', 'value'),
-)
-def change_interval(n_clicks):
-    if value == False :
-        return 99999999999999  # milliseconds
-    else:
-        return 1500  # milliseconds
+# @app.callback(
+#     Output("graph-update", "interval"),
+#     Input('my-toggle-switch', 'value'),
+# )
+# def change_interval(n_clicks):
+#     if value == False :
+#         return 99999999999999  # milliseconds
+#     else:
+#         return 1500  # milliseconds
 
 
 
@@ -76,6 +76,7 @@ def update_output(value,data):
 
     if value==False:
         time_interval = 9999999999999900000
+        time.sleep(60)
         if last < 15 : 
             candle = plotly.graph_objs.Candlestick(
                     x = list(x),
@@ -249,6 +250,7 @@ def update_output(value,data):
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
             fig.update_yaxes(visible=False)
+            time.sleep(60)
             return (string2,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
