@@ -46,12 +46,15 @@ app.layout = html.Div([
                 id='graph-update',
                 interval=time_interval
             ),
+
+    dcc.Graph(id='live-graph1', animate=False),
 ])
 
 
 @app.callback(
     [Output('toggle-switch-output', 'children'),
-     Output('live-graph', 'figure')],
+     Output('live-graph', 'figure'),
+    Output('live-graph1', 'figure')],
     [Input('my-toggle-switch', 'value'),
      Input('graph-update', 'n_intervals')])
 
@@ -59,23 +62,9 @@ def update_output(value,data):
     global last
     global time_interval
 
-    X.append(X[-1] + 1)
-    y.append(y[-1] + y[-1] * random.uniform(-0.1, 0.1))
 
     string1 = 'The switch is off'
     string2 = 'This is working'
-
-    fig1 = go.Figure()
-    fig1.update_layout(plot_bgcolor='rgba(255,255,255,255)', paper_bgcolor='rgba(255,255,255,255)',
-                      yaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='rgba(255,255,255,255)')),
-                      xaxis=dict(showgrid=False, zeroline=False, tickfont=dict(color='rgba(255,255,255,255)')))
-
-    fig2 = go.Figure()
-    fig2.add_trace(go.Scatter(x=list(X), y=list(y), name='Random 1', mode='lines'))
-    fig2.update_layout(
-        xaxis=dict(range=[X[0], X[-1]]),
-        yaxis=dict(range=[min(y) - 0.1, max(y) + 0.1]),
-        height=385)
 
     if value==False:
         time_interval = 9999999999999900000
@@ -99,7 +88,10 @@ def update_output(value,data):
             fig = go.Figure(
                 data =  [candle,scatter]
             )
-            return (string1,
+            fig.update_layout(showlegend=False)
+            fig.update_xaxes(visible=False)
+            fig.update_yaxes(visible=False)
+            return (string1,fig,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         xaxis = dict(
@@ -129,7 +121,10 @@ def update_output(value,data):
             fig = go.Figure(
                 data =  [candle,scatter]
             )
-            return (string1,
+            fig.update_layout(showlegend=False)
+            fig.update_xaxes(visible=False)
+            fig.update_yaxes(visible=False)
+            return (string1,fig,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         xaxis = dict(
@@ -165,6 +160,12 @@ def update_output(value,data):
                     )
                     last = last + 1
                     print(x[0] ,x[-1])
+                    fig = go.Figure(
+                        data =  [candle,scatter]
+                    )
+                    fig.update_layout(showlegend=False)
+                    fig.update_xaxes(visible=False)
+                    fig.update_yaxes(visible=False)
                     return (string2, 
                             {'data': [candle,scatter],
                             'layout' : go.Layout(xaxis_rangeslider_visible=True,
@@ -173,7 +174,8 @@ def update_output(value,data):
                                                     range = [x[0] , x[-1] ],
                                                     type='date'),
                                                 yaxis = dict(range = [min(low),max(high)]),
-                                                )} 
+                                                )},
+                            fig
                             )
                 else : 
                     x.append(df.iloc[last,0])
@@ -199,6 +201,12 @@ def update_output(value,data):
                     )
                     last = last + 1
                     print(x[-15],x[-1])
+                    fig = go.Figure(
+                        data =  [candle,scatter]
+                    )
+                    fig.update_layout(showlegend=False)
+                    fig.update_xaxes(visible=False)
+                    fig.update_yaxes(visible=False)
                     return (string2,
                             {'data': [candle,scatter],
                             'layout' : go.Layout(xaxis_rangeslider_visible=True,
@@ -207,7 +215,8 @@ def update_output(value,data):
                                                     range = [x[-15] , x[-1] ],
                                                     type='date'),
                                                 yaxis = dict(range = [min(low),max(high)]),
-                                                ) }
+                                                ) },
+                            fig
                            )
         else : 
             candle = plotly.graph_objs.Candlestick(
@@ -226,7 +235,14 @@ def update_output(value,data):
                     mode= 'lines+markers'
             )
             print(x[-15],x[-1])
-            return (string2,{'data': [candle,scatter],
+            fig = go.Figure(
+                data =  [candle,scatter]
+            )
+            fig.update_layout(showlegend=False)
+            fig.update_xaxes(visible=False)
+            fig.update_yaxes(visible=False)
+            return (string2,fig,
+                    {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                 xaxis = dict(autorange=False,
                                             range = [x[-15] , x[-1] ],
