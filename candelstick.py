@@ -36,7 +36,7 @@ server = app.server
 app.layout = html.Div([
     daq.ToggleSwitch(
         id='my-toggle-switch',
-        value=False
+        value=True
     ),
     html.Div(id='toggle-switch-output'),
 
