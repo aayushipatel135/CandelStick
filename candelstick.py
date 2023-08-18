@@ -24,7 +24,6 @@ low.append(df.iloc[0,3])
 close = []
 close.append(df.iloc[0,1])
 last = 0
-time_interval = 1500
 
 
 # Initialising variables
@@ -44,7 +43,7 @@ app.layout = html.Div([
     dcc.Graph(id='live-graph', animate=False),
             dcc.Interval(
                 id='graph-update',
-                interval=time_interval
+                interval=2000
             ),
 
 ])
