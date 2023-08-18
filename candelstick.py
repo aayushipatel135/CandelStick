@@ -191,11 +191,11 @@ def update_output(value,data):
                             decreasing_line_color = 'red'
                     )
                     candle1 = plotly.graph_objs.Candlestick(
-                    x = list(x[5]),
-                    low = list(low[5]),
-                    high = list(high[5]),
-                    close = list(close[5]),
-                    open = list(open[5]),
+                    x = [x[5]],
+                    low = [low[5]],
+                    high = [high[5]],
+                    close = [close[5]],
+                    open = [open[5]],
                     increasing_line_color = 'blue',
                     decreasing_line_color = 'blue'
             )
