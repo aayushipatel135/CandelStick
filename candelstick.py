@@ -99,16 +99,16 @@ def update_output(value,data):
             fig = go.Figure(
                 data =  [candle,scatter]
             )
-            return (string1,fig)
-                   #  {'data': [candle,scatter],
-                   #  'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                   #                      xaxis = dict(
-                   #                      autorange=False,
-                   #                      range = [x[0] , x[-1] ],
-                   #                      type='date'),
-                   #                      yaxis = dict(range = [min(low),max(high)]),
-                   #  )}
-                   # )
+            return (string1,
+                    {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                        xaxis = dict(
+                                        autorange=False,
+                                        range = [x[0] , x[-1] ],
+                                        type='date'),
+                                        yaxis = dict(range = [min(low),max(high)]),
+                    )}
+                   )
         else : 
             candle = plotly.graph_objs.Candlestick(
                     x = list(x),
@@ -129,16 +129,16 @@ def update_output(value,data):
             fig = go.Figure(
                 data =  [candle,scatter]
             )
-            return (string1,fig)
-                   #  {'data': [candle,scatter],
-                   #  'layout' : go.Layout(xaxis_rangeslider_visible=True,
-                   #                      xaxis = dict(
-                   #                      autorange=False,
-                   #                      range = [x[-15] , x[-1] ],
-                   #                      type='date'),
-                   #                      yaxis = dict(range = [min(low),max(high)]),
-                   #  )}
-                   # )
+            return (string1,
+                    {'data': [candle,scatter],
+                    'layout' : go.Layout(xaxis_rangeslider_visible=True,
+                                        xaxis = dict(
+                                        autorange=False,
+                                        range = [x[-15] , x[-1] ],
+                                        type='date'),
+                                        yaxis = dict(range = [min(low),max(high)]),
+                    )}
+                   )
     else:
         time_interval = 1500
         if last < len(df) : 
