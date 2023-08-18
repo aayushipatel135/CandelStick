@@ -100,8 +100,6 @@ def update_output(value,data):
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
             fig.update_yaxes(visible=False)
-            data['increasing']['line']['color'][0] = 'blue'
-            data['decreasing']['line']['color'][0] = 'blue'
             return (string1,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
@@ -177,6 +175,8 @@ def update_output(value,data):
                     fig.update_layout(showlegend=False)
                     fig.update_xaxes(visible=False)
                     fig.update_yaxes(visible=False)
+                    data['increasing']['line']['color'][2] = 'blue'
+                    data['decreasing']['line']['color'][2] = 'blue'
                     return (string2, 
                             {'data': [candle,scatter],
                             'layout' : go.Layout(xaxis_rangeslider_visible=True,
