@@ -48,18 +48,6 @@ app.layout = html.Div([
 
 ])
 
-# @app.callback(
-#     Output("graph-update", "interval"),
-#     Input('my-toggle-switch', 'value'),
-# )
-# def change_interval(n_clicks):
-#     if value == False :
-#         return 99999999999999  # milliseconds
-#     else:
-#         return 1500  # milliseconds
-
-
-
 @app.callback(
     [Output('toggle-switch-output', 'children'),
      Output('live-graph', 'figure')],
@@ -120,6 +108,15 @@ def update_output(value,data):
                     increasing_line_color = 'green',
                     decreasing_line_color = 'red'
             )
+            candle1 = plotly.graph_objs.Candlestick(
+                    x = list(x[5]),
+                    low = list(low[5]),
+                    high = list(high[5]),
+                    close = list(close[5]),
+                    open = list(open[5]),
+                    increasing_line_color = 'blue',
+                    decreasing_line_color = 'blue'
+            )
             scatter = plotly.graph_objs.Scatter(
                 x=list(x),
                 y=list(open),
@@ -128,7 +125,7 @@ def update_output(value,data):
             )
             print(x[-1],x[-1])
             fig = go.Figure(
-                data =  [candle,scatter]
+                data =  [candle,candle1,scatter]
             )
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
@@ -175,8 +172,6 @@ def update_output(value,data):
                     fig.update_layout(showlegend=False)
                     fig.update_xaxes(visible=False)
                     fig.update_yaxes(visible=False)
-                    data['increasing']['line']['color'][2] = 'blue'
-                    data['decreasing']['line']['color'][2] = 'blue'
                     return (string2, 
                             {'data': [candle,scatter],
                             'layout' : go.Layout(xaxis_rangeslider_visible=True,
