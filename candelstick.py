@@ -108,15 +108,6 @@ def update_output(value,data):
                     increasing_line_color = 'green',
                     decreasing_line_color = 'red'
             )
-            candle1 = plotly.graph_objs.Candlestick(
-                    x = list(x[5]),
-                    low = list(low[5]),
-                    high = list(high[5]),
-                    close = list(close[5]),
-                    open = list(open[5]),
-                    increasing_line_color = 'blue',
-                    decreasing_line_color = 'blue'
-            )
             scatter = plotly.graph_objs.Scatter(
                 x=list(x),
                 y=list(open),
@@ -199,6 +190,15 @@ def update_output(value,data):
                             increasing_line_color = 'green',
                             decreasing_line_color = 'red'
                     )
+                    candle1 = plotly.graph_objs.Candlestick(
+                    x = list(x[5]),
+                    low = list(low[5]),
+                    high = list(high[5]),
+                    close = list(close[5]),
+                    open = list(open[5]),
+                    increasing_line_color = 'blue',
+                    decreasing_line_color = 'blue'
+            )
                     scatter = plotly.graph_objs.Scatter(
                         x=list(x),
                         y=list(open),
@@ -214,7 +214,7 @@ def update_output(value,data):
                     fig.update_xaxes(visible=False)
                     fig.update_yaxes(visible=False)
                     return (string2,
-                            {'data': [candle,scatter],
+                            {'data': [candle,candle1,scatter],
                             'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                                 xaxis = dict(
                                                     autorange=False,
