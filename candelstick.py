@@ -49,6 +49,17 @@ app.layout = html.Div([
 
 ])
 
+@app.callback(
+    Output("graph-update", "interval"),
+    Input('my-toggle-switch', 'value'),
+)
+def change_interval(n_clicks):
+    if value == False :
+        return 99999999999999  # milliseconds
+    else:
+        return 1500  # milliseconds
+
+
 
 @app.callback(
     [Output('toggle-switch-output', 'children'),
