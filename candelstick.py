@@ -47,14 +47,12 @@ app.layout = html.Div([
                 interval=time_interval
             ),
 
-    dcc.Graph(id='live-graph1', animate=False),
 ])
 
 
 @app.callback(
     [Output('toggle-switch-output', 'children'),
-     Output('live-graph', 'figure'),
-    Output('live-graph1', 'figure')],
+     Output('live-graph', 'figure')],
     [Input('my-toggle-switch', 'value'),
      Input('graph-update', 'n_intervals')])
 
@@ -91,7 +89,7 @@ def update_output(value,data):
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
             fig.update_yaxes(visible=False)
-            return (string1,fig,
+            return (string1,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         xaxis = dict(
@@ -124,7 +122,7 @@ def update_output(value,data):
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
             fig.update_yaxes(visible=False)
-            return (string1,fig,
+            return (string1,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                         xaxis = dict(
@@ -175,7 +173,7 @@ def update_output(value,data):
                                                     type='date'),
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 )},
-                            fig
+                            
                             )
                 else : 
                     x.append(df.iloc[last,0])
@@ -216,7 +214,7 @@ def update_output(value,data):
                                                     type='date'),
                                                 yaxis = dict(range = [min(low),max(high)]),
                                                 ) },
-                            fig
+                            
                            )
         else : 
             candle = plotly.graph_objs.Candlestick(
@@ -241,7 +239,7 @@ def update_output(value,data):
             fig.update_layout(showlegend=False)
             fig.update_xaxes(visible=False)
             fig.update_yaxes(visible=False)
-            return (string2,fig,
+            return (string2,
                     {'data': [candle,scatter],
                     'layout' : go.Layout(xaxis_rangeslider_visible=True,
                                 xaxis = dict(autorange=False,
